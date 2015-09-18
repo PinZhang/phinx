@@ -757,7 +757,15 @@ class MysqlAdapter extends PdoAdapter implements AdapterInterface
                         }
                     }
                 }
-                return array('name' => 'blob');
+
+                if ($limit) {
+                    return array('name' => 'binary', 'limit' => $limit);
+                } elseif (!$limit) {
+                    return array('name' => 'binary');
+                }
+                break;
+            case static::PHINX_TYPE_VARBINARY:
+                return array('name' => 'varbinary', 'limit' => $limit);
                 break;
             case static::PHINX_TYPE_INTEGER:
                 if ($limit && $limit >= static::INT_TINY) {
@@ -895,6 +903,12 @@ class MysqlAdapter extends PdoAdapter implements AdapterInterface
                         $limit = null;
                     }
                     $type = static::PHINX_TYPE_BIG_INTEGER;
+                    break;
+                case 'binary':
+                    $type = static::PHINX_TYPE_BINARY;
+                    break;
+                case 'varbinary':
+                    $type = static::PHINX_TYPE_VARBINARY;
                     break;
                 case 'blob':
                     $type = static::PHINX_TYPE_BINARY;

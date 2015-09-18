@@ -465,6 +465,7 @@ abstract class PdoAdapter implements AdapterInterface
             'time',
             'date',
             'binary',
+            'varbinary',
             'boolean',
             'uuid',
             // Geospatial data types
