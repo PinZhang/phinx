@@ -237,6 +237,10 @@ class MysqlAdapter extends PdoAdapter implements AdapterInterface
             $optionsStr = sprintf('ENGINE = %s', $options['engine']);
         }
 
+        if (isset($options['auto_increment'])) {
+            $optionsStr .= sprintf(' AUTO_INCREMENT = %s', $options['auto_increment']);
+        }
+
         // process table collation
         if (isset($options['collation'])) {
             $charset = explode('_', $options['collation']);
